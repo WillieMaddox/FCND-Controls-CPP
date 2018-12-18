@@ -112,3 +112,36 @@ With the above parameters the simulations should look like this:
 <img src="animations/scenario3.gif" width="500"/>
 </p>
 
+## Non-idealities and robustness (Scenario 4) ##
+
+In this part, we will explore some of the non-idealities and robustness of a controller.  For this simulation, we will use `Scenario -> 4_Nonidealities`.  This configuration has 3 quads that are all are trying to move one meter forward.  However, each quad is a bit different:
+ - The green quad has its center of mass shifted back
+ - The orange vehicle is an ideal quad
+ - The red vehicle is heavier than usual
+
+To stabalize the motion, we add basic integral control to `AltitudeControl()`.
+
+And tune 1 parameter in `QuadControlParams.txt`:
+ - `KiPosZ` Gain in the accumulated vertical position over time.
+ 
+Reasonable parameter for `KiPosZ` was found to be:
+```$xslt
+KiPosZ = 60
+```
+
+Performance Evaluation
+ - position error for all 3 quads should be less than 0.1 meters for at least 1.5 seconds
+
+Result
+```
+PASS: ABS(Quad1.PosFollowErr) was less than 0.100000 for at least 1.500000 seconds
+PASS: ABS(Quad2.PosFollowErr) was less than 0.100000 for at least 1.500000 seconds
+PASS: ABS(Quad3.PosFollowErr) was less than 0.100000 for at least 1.500000 seconds
+```
+
+With the above parameters the simulations should look like this:
+
+<p align="center">
+<img src="animations/scenario4.gif" width="500"/>
+</p>
+
