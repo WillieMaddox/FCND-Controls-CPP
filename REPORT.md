@@ -145,3 +145,29 @@ With the above parameters the simulations should look like this:
 <img src="animations/scenario4.gif" width="500"/>
 </p>
 
+## Tracking trajectories (Scenario 5) ##
+
+Now that we have all the working parts of a controller, test it's performance on a trajectory.  For this simulation, use `Scenario 5_TrajectoryFollow`.  This scenario has two quadcopters:
+ - the orange one is following `traj/FigureEight.txt`
+ - the other one is following `traj/FigureEightFF.txt` - the same trajectory but with velocity (not just position) information.
+ 
+Performance Evaluation
+ - position error of the quad should be less than 0.25 meters for at least 3 seconds
+
+Result
+```
+PASS: ABS(Quad2.PosFollowErr) was less than 0.250000 for at least 3.000000 seconds
+```
+
+With the two different trajectories, your drones' motions should look like this:
+
+<p align="center">
+<img src="animations/scenario5.gif" width="500"/>
+</p>
+
+## TODO: Extra Challenge 2 (Optional) ##
+
+For flying a trajectory, is there a way to provide even more information for even better tracking?
+
+How about trying to fly this trajectory as quickly as possible (but within following threshold)!
+
