@@ -1,6 +1,6 @@
 # Project #3 - Controlling a 3D Quadrotor
 
-The goal here is to implement a set of functions and parameters capable of controlling a quadrotor within various scenarios.
+The goal here is to implement a set of functions and parameters capable of controlling a quadrotor within various scenarios.  Specific instructions can be found in the README.md in the same directory as this file.
 
 ## Intro: determine mass (scenario 1) ##
 
