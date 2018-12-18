@@ -1,4 +1,8 @@
-### Intro: determine mass (scenario 1) ###
+# Project #3 - Controlling a 3D Quadrotor
+
+The goal here is to implement a set of functions and parameters capable of controlling a quadrotor within various scenarios.
+
+## Intro: determine mass (scenario 1) ##
 
 The first scenario in the simulator, `1_Intro`, runs with the quad falling straight down.  This is due to the fact that the thrusts are simply being set to:
 
