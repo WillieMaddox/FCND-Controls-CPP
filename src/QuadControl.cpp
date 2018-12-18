@@ -104,9 +104,9 @@ V3F QuadControl::BodyRateControl(V3F pqrCmd, V3F pqr)
   V3F momentCmd;
 
   ////////////////////////////// BEGIN STUDENT CODE ///////////////////////////
-
-  V3F Iii(Ixx, Iyy, Izz);
-  momentCmd = kpPQR * (pqrCmd - pqr) * Iii;
+  // Since pqr are in the body frame, we only need the diagonal elements of the moments of inertia.
+  V3F MOI(Ixx, Iyy, Izz);
+  momentCmd = kpPQR * (pqrCmd - pqr) * MOI;
 
   /////////////////////////////// END STUDENT CODE ////////////////////////////
 
@@ -140,11 +140,8 @@ V3F QuadControl::RollPitchControl(V3F accelCmd, Quaternion<float> attitude, floa
   float c = -collThrustCmd / mass;
   float b_x_command = CONSTRAIN(accelCmd[0] / c, -maxTiltAngle, maxTiltAngle);
   float b_y_command = CONSTRAIN(accelCmd[1] / c, -maxTiltAngle, maxTiltAngle);
-  float b_x = R(0, 2);
-  float b_y = R(1, 2);
-
-  float b_x_c_dot = kpBank * (b_x_command - b_x);
-  float b_y_c_dot = kpBank * (b_y_command - b_y);
+  float b_x_c_dot = kpBank * (b_x_command - R(0, 2)); // R(0, 2) -> b_x
+  float b_y_c_dot = kpBank * (b_y_command - R(1, 2)); // R(1, 2) -> b_y
 
   pqrCmd[0] = (R(1, 0) * b_x_c_dot - R(0, 0) * b_y_c_dot) / R(2, 2);
   pqrCmd[1] = (R(1, 1) * b_x_c_dot - R(0, 1) * b_y_c_dot) / R(2, 2);
@@ -179,12 +176,11 @@ float QuadControl::AltitudeControl(float posZCmd, float velZCmd, float posZ, flo
 
   ////////////////////////////// BEGIN STUDENT CODE ///////////////////////////
 
-  float b_z = R(2, 2);
   float posZErr = (posZCmd - posZ);
   float velZErr = (velZCmd - velZ);
   integratedAltitudeError += posZErr * dt;
   float accelZ = kpPosZ * posZErr + kpVelZ * velZErr + KiPosZ * integratedAltitudeError + accelZCmd;
-  float accelNet = (accelZ - 9.81f) / b_z;
+  float accelNet = (accelZ - 9.81f) / R(2, 2); // R(2, 2) -> b_z
   accelNet = CONSTRAIN(accelNet, -maxAscentRate / dt, maxDescentRate / dt); //Flip since z points down.
   thrust = -mass * accelNet;
 
