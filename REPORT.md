@@ -12,7 +12,10 @@ Therefore, if the mass doesn't match the actual mass of the quad, it'll fall dow
 Mass = 0.49
 ```
 
-and the evaluation,
+Performance Evaluation
+ - tune the `Mass` parameter in `QuadControlParams.txt` to make the vehicle more or less stay in the same spot.
+
+Result
 ```$xslt
 PASS: ABS(Quad.PosFollowErr) was less than 0.500000 for at least 0.800000 seconds
 ```
